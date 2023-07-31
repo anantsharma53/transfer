@@ -1,0 +1,101 @@
+@media print {
+    .postSelection,
+    .Actionbutton,
+    .p-3.text-center.bg-light,
+    .tableDesigne:not(.print-table) {
+      display: none;
+    }
+  
+    /* Additional styles for printing layout (optional) */
+    /* Customize the appearance of your printed page */
+    body {
+      font-size: 12px; /* Adjust font size for printing */
+      line-height: 1.4; /* Adjust line height for printing */
+      /* ... other styles as needed ... */
+    }
+    table {
+       
+      width: 100%;
+      /* ... other styles as needed ... */
+    }
+    @page {
+        /* Set the size and margins of the printed page */
+        size: A4 portrait; /* Change to the desired page size */
+        margin: 2cm; /* Set the desired margins */
+    
+        /* Add a custom header to the printed page */
+        @top-center {
+          content: "Your Custom Header"; /* Replace with your custom header text */
+          font-size: 12px; /* Adjust the font size for the header */
+        }
+      }
+  }
+.styled {
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    margin-left: 34px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
+    background-color: #d8363a;
+    background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.styled:hover {
+    background-color: rgba(255, 0, 0, 1);
+}
+
+.styled:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6), inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.tableDesigne{
+    margin-left:300px;
+    
+    margin-top: 5px;
+}
+.Actionbutton{
+    margin: 60px;
+    display:flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    gap: 10px;
+    
+}
+thead,
+tfoot {
+    background-color: #3f87a6;
+    color: #fff;
+}
+
+tbody {
+    background-color: #e4f0f5;
+}
+
+caption {
+    padding: 10px;
+    caption-side: bottom;
+}
+
+table {
+    border-collapse: collapse;
+    border: 2px solid rgb(200, 200, 200);
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    
+}
+
+td,
+th {
+    border: 1px solid rgb(190, 190, 190);
+    padding: 5px 10px;
+}
+
+td {
+    text-align: center;
+}

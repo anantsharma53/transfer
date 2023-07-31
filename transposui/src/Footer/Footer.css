@@ -1,0 +1,68 @@
+/* Footer.css */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+
+
+
+/* Add any additional styles you need for the footer */
+/* For example, .footer-bottom, .credits, etc. */
+#footerdas {
+    height: auto;
+    padding: 5px; /* Add any padding you want */
+    margin-top: auto;
+    font-size: 14px;
+    /* background: #37517e; */
+    background: #fccb90;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+  }
+  #footerdas .footer-bottom {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    color: #fff;
+  }
+  
+  #footerdas .copyright {
+    float: left;
+  }
+  
+  #footerdas .credits {
+    float: right;
+    font-size: 13px;
+  }
+  
+  #footerdas .credits a {
+    transition: 0.3s;
+  }
+  
+  @media (max-width: 768px) {
+    #footerdas .footer-bottom {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+  
+    #footerdas .copyright,
+    #footerdas .credits {
+      text-align: center;
+      float: none;
+    }
+  
+    #footerdas .credits {
+      padding-top: 4px;
+    }
+  }

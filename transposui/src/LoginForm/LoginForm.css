@@ -1,0 +1,48 @@
+/* .login-container{
+    margin-right: 30%;
+    margin-left: 30%;
+    padding: 0px !important;
+    margin-top: 20px;
+}
+.container.mt-100{
+align-items: center;
+
+}
+@media screen and (max-width:600px){
+.login-container{
+    margin-right: 52px ;
+    margin-left: 30px;
+    padding: 0px !important;
+    margin-top: 20px;
+}
+.container.mt-100{
+align-items: center;
+
+}} */
+.gradient-custom-2 {
+    /* fallback for old browsers */
+    background: #fccb90;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+    }
+    
+    @media (min-width: 768px) {
+    .gradient-form {
+    height: 100vh !important;
+    }
+    }
+    @media (min-width: 769px) {
+    .gradient-custom-2 {
+    border-top-right-radius: .3rem;
+    border-bottom-right-radius: .3rem;
+    }
+    }
+.center-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
