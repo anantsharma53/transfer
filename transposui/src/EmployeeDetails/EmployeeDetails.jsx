@@ -73,18 +73,14 @@ function EmployeeDetails() {
                                 <label htmlFor="Date_of_Birth">Date of Birth</label>
                                 <Field
                                     name="Date_of_Birth"
-                                    render={({ field }) => (
-                                        <DatePicker
-                                            selected={field.value}
-                                            onChange={(date) => {
-                                                setUser({ ...user, Date_of_Birth: date });
-                                            }}
-                                            className={'form-control' + (errors.Date_of_Birth && touched.Date_of_Birth ? ' is-invalid' : '')}
-                                        />
-                                    )}
-                                />
-                                {/* Display any error message */}
-                                {errors.Date_of_Birth && touched.Date_of_Birth && <div className="invalid-feedback">{errors.Date_of_Birth}</div>}
+                                    type="date"
+                                    className="form-control"
+                                    id="date"
+                                    value={user.Date_of_Birth}
+                                    onInput={(e) => {
+                                        user.Date_of_Birth = e.target.value;
+                                        setUser(user);}}                                    
+                                ></Field>                                
                             </div>
                             {/* <div className="form-group">
                                 <label htmlFor="Date_of_Birth" >Date of Birth</label>
@@ -128,7 +124,6 @@ function EmployeeDetails() {
                                 }} className={'form-control' + (errors.First_Previous_Block && touched.First_Previous_Block ? ' is-invalid' : '')} />
                                 {/* <ErrorMessage name="First_Previous_Block" component="div" className="invalid-feedback" /> */}
                             </div>
-
                             <div className="form-group">
                                 {
                                     user ? (<button type="submit" className="btn btn-primary mr-2" onClick={handleSubmit}>Submit</button>)
