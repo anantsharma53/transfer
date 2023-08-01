@@ -9,6 +9,7 @@ import ActionPage2 from './ActionPage2/ActionPage2';
 import ProtectedRoute from './routes/ProtectedRoute';
 import Homepage from './HomePage/Homepage';
 import Dashboard from './Dashboard/Dashboard';
+import EmployeeDetails from './EmployeeDetails/EmployeeDetails';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
     <Routes>
       <Route path='' element={<Homepage/>}></Route>
       <Route path='/home1' element={<Homepage/>}></Route>
+      <Route path='/emp' element={<EmployeeDetails/>}></Route>
       <Route path='/login' element={<Login/>}></Route>
       <Route path='/user' element={<ProtectedRoute Component={Register} />}/>
       <Route path='/dashboard' element={<ProtectedRoute Component={Dashboard} />}/>
