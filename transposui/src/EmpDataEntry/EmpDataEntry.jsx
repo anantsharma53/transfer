@@ -5,10 +5,9 @@ import { Link } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Navbar from "../NavBar/Navbar";
-import Footer from '../Footer/Footer';
-import HeaderButton from "../HeaderButton/HeaderButton";
+import Header from '../Header/Header';
 
-function Register() {
+function EmpRegister() {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   function handleSubmit() {
@@ -39,8 +38,6 @@ function Register() {
 
   return (
     <div>
-      <Navbar></Navbar>
-      <HeaderButton/>
       <Formik
         initialValues={{
           name: '',
@@ -62,14 +59,14 @@ function Register() {
           alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
         }}
         render={({ errors, status, touched }) => (
-          <section class="vh-50 ">
-            <div class="container py-3 h-80">
-              <div class="row justify-content-center align-items-center h-100">
+          <section class="vh-150 gradient-custom">
+            <div class="container py-5 h-100">
+              <div class="row justify-content-center align-items-center h-130">
                 <div class="col-12 col-lg-9 col-xl-7">
                   <div class="card shadow-2-strong card-registration" style={{borderradius: '10px'}}>
                     <div class="card-body p-8 p-md-5">
-                       <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">User Registration Form</h3>
-                          <Form >
+                       <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
+                          <Form>
                             <div className="form-group">
                               <label htmlFor="firstName">Name</label>
                                 <Field name="firstName" type="text" onInput={(e) => {user.name = e.target.value; //setUser(user);
@@ -125,8 +122,8 @@ function Register() {
                               <button type="reset" className="btn btn-secondary">Reset</button>
                             </div>
                           </Form>
-                          {/* <p class="text-center text-muted ">Have already an account? <a href="#!"class="fw-bold text-body">
-                          <Link to="/Login">Login here</Link></a></p> */}
+                          <p class="text-center text-muted ">Have already an account? <a href="#!"class="fw-bold text-body">
+                          <Link to="/Login">Login here</Link></a></p>
                     </div>
                   </div>
                 </div>
@@ -135,9 +132,8 @@ function Register() {
           </section>
         )}
       />
-       <Footer></Footer>
     </div>
   );
 }
 
-export default Register;
+export default EmpRegister;

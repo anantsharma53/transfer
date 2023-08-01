@@ -47,7 +47,7 @@ function Login() {
         localStorage.setItem("token", data.access); // Store the access_token in localStorage
         localStorage.setItem("tokenExpiration", data.access);
        
-        navigate("/home");
+        navigate("/dashboard");
       })
       .catch((err) => {
         alert("Check your Username Or Password");
@@ -91,15 +91,15 @@ function Login() {
                       </div>
 
                       <div className="text-center pt-1 mb-5 pb-1">
-                        <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button" onClick={handleSubmit}>Log
+                        <button className="btn btn-block fa-lg gradient-custom-2 mb-3" type="button" onClick={handleSubmit}>Log
                           in</button>
                         <a className="text-muted" href="#!">Forgot password?</a>
                       </div>
 
-                      <div className="d-flex align-items-center justify-content-center pb-4">
+                      {/* <div className="d-flex align-items-center justify-content-center pb-4">
                         <p className="mb-0 me-2">Don't have an account?</p>
                         <Link to="/user" type="button" className="btn btn-outline-danger">Create new</Link>
-                      </div>
+                      </div> */}
                     </form>
                   </div>
                 </div>

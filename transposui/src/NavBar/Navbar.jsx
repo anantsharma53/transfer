@@ -32,7 +32,7 @@ export default function Navbar() {
                 <li>
                 {
             loggedIn ? (
-              <Link className="nav-link   scrollto" to="/home">Dashboard</Link>
+              <Link className="nav-link   scrollto" to="/dashboard">Dashboard</Link>
             ) : (
                <Link className="nav-link   scrollto" to="/login">
                  Dashboard

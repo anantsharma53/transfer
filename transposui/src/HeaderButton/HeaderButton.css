@@ -1,0 +1,19 @@
+.btn {
+    margin-right: 40px;
+    margin-top: 40px ;
+    padding: 12px 80px;
+    cursor: pointer;
+    border-width: 1px;
+    border-radius: 0 40px 0 40px;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: #dd3675;
+    /* background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593); */
+    -webkit-box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
+}
+.container {
+    width: 100%; /* Center the content vertically */
+     /* Adjust the height as needed */
+}

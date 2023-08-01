@@ -17,9 +17,10 @@ function App() {
       <Route path='' element={<Homepage/>}></Route>
       <Route path='/home1' element={<Homepage/>}></Route>
       <Route path='/login' element={<Login/>}></Route>
-      <Route path='/user' element={<Register/>}></Route>
-      <Route path='/dashboard' element={<Dashboard/>}></Route>
+      <Route path='/user' element={<ProtectedRoute Component={Register} />}/>
+      <Route path='/dashboard' element={<ProtectedRoute Component={Dashboard} />}/>
       <Route path='/home' element={<ProtectedRoute Component={ActionPage2} />}/>
+      <Route path='/viewemp' element={<ProtectedRoute Component={ActionPage} />}/>
     </Routes>
     </BrowserRouter>
    
