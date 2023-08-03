@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 import json
 import random
 import copy
+from .models import *
 from .data import Employee
 # Create your views here.
 NEWEmployee_list = []
@@ -42,6 +43,15 @@ class GetEmployeeView(View):
     def get(self, request):
         employee_serialized = EmployeeSerializer(Employee, many=True).data
         return JsonResponse(employee_serialized, safe=False, status=200)
+    
+class EmployeeEntryView(APIView):
+    def post(self,request):
+        serializer=EmployeeSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({'message':'entry done'}, status=status.HTTP_201_CREATED)
+        return JsonResponse(serializer.error,status.HTTP_400_BAD_REQUEST,safe=False)
+
 
 
 class GetEmployeeByPostView(View):

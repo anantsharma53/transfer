@@ -12,4 +12,5 @@ urlpatterns =[
     path('employee/clean/', CleanArray.as_view(), name='employee-list'),
     path('employee/user/signup/',csrf_exempt(SigneUpView.as_view()),name='user-signup'),
     path('employee/user/login/',csrf_exempt(SignInView.as_view()),name='user-login'),
+    path('employee/emp/',csrf_exempt(EmployeeEntryView.as_view()),name='Employee-Entry-View'),
 ]

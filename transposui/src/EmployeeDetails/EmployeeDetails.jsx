@@ -12,7 +12,7 @@ function EmployeeDetails() {
     const navigate = useNavigate();
     function handleSubmit() {
         console.log(user);
-        fetch("http://127.0.0.1:8000/api/employee/", {
+        fetch("http://127.0.0.1:8000/api/employee/emp/", {
             method: "POST",
             body: JSON.stringify(user),
             headers: {
@@ -24,6 +24,8 @@ function EmployeeDetails() {
                 console.log(res);
                 if (res.status === 201) {
                     setUser({});
+                    document.getElementById("employee-form").reset();
+                    setUser(prevState => ({ ...prevState, Date_of_Birth: '' }));
                 } else if (res.status === 401) {
                     console.log("Unauthorized request");
                     navigate("/login");
@@ -34,6 +36,11 @@ function EmployeeDetails() {
             });
         console.log(user);
     }
+function Reset(){
+    document.getElementById("employee-form").reset();
+    setUser(prevState => ({ ...prevState, Date_of_Birth: '' }));
+
+}
 
     return (
         <div>
@@ -53,7 +60,7 @@ function EmployeeDetails() {
                     Home_Block: Yup.string().required('Password is required'),
                     Current_Posting_Block: Yup.string().required(' required'),
                     Current_Posting_Year: Yup.string().required('required'),
-                    First_Previous_Block: Yup.number().required('required'),
+                    First_Previous_Block: Yup.string().required('required'),
                 })}
                 onSubmit={fields => {
                     alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
@@ -61,7 +68,7 @@ function EmployeeDetails() {
                 render={({ errors, status, touched }) => (
                     <section class=" container mt-5 ">
                         <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Employee Information</h3>
-                        <Form className="container">
+                        <Form id="employee-form" className="container">
                             <div className="form-group">
                                 <label htmlFor="Employee_Name">Name</label>
                                 <Field name="Employee_Name" type="text" onInput={(e) => {
@@ -131,7 +138,7 @@ function EmployeeDetails() {
                                             <button type="submit" className="btn btn-primary mr-2" disabled>Submit</button>
                                         )}
 
-                                <button type="reset" className="btn btn-secondary">Reset</button>
+                                <button type="reset" className="btn btn-secondary"onClick={Reset}>Reset</button>
                             </div>
                         </Form>
                     </section>
