@@ -21,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
             name=validated_data['name'],
             # last_name=validated_data['last_name'],
             email=validated_data['email'],
-            mobile_number=validated_data['mobile_number']
+            mobile_number=validated_data['mobile_number'],           
         )
         return user
 class LoginSerializer(serializers.Serializer):

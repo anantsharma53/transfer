@@ -5,6 +5,8 @@ class UserManager(BaseUserManager):
     def create_user(self,username,password,**extra_fields):
         if not username:
             raise ValueError("Username sholud be provided")
+        extra_fields.setdefault('is_staff',False)
+        extra_fields.setdefault('is_superuser',False)
         user=self.model(username=username,**extra_fields)
         user.set_password(password)
         user.save()
@@ -22,7 +24,10 @@ class User(AbstractBaseUser):
     email= models.EmailField(max_length=100,unique=True)
     mobile_number = models.CharField(max_length=15)
     password=models.CharField(max_length=100)
+    is_staff=models.BooleanField(default=False)
+    is_superuser=models.BooleanField(default=False)
 
+    
     USERNAME_FIELD='username'
     objects=UserManager()
 
@@ -33,6 +38,7 @@ class employee(models.Model):
     Current_Posting_Block=models.CharField(max_length=50)
     Current_Posting_Year= models.CharField(max_length=50)
     First_Previous_Block=models.CharField(max_length=50)
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='user')
    
 class newemployee(models.Model):
     Employee_Name= models.CharField(max_length=100)

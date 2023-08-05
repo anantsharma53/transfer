@@ -19,6 +19,7 @@ function App() {
       <Route path='/home1' element={<Homepage/>}></Route>
       <Route path='/emp' element={<EmployeeDetails/>}></Route>
       <Route path='/login' element={<Login/>}></Route>
+      <Route path='/register' element={<Register/>}/>
       <Route path='/user' element={<ProtectedRoute Component={Register} />}/>
       <Route path='/dashboard' element={<ProtectedRoute Component={Dashboard} />}/>
       <Route path='/home' element={<ProtectedRoute Component={ActionPage2} />}/>

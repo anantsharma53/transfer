@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import './Dashboard.css'
 import Navbar from "../NavBar/Navbar";
 import Footer from "../Footer/Footer";
@@ -6,12 +7,55 @@ import './Dashboard.css';
 import { Link } from "react-router-dom";
 import HeaderButton from "../HeaderButton/HeaderButton";
 function Dashboard() {
+    const user = JSON.parse(localStorage.getItem('user_details'));
+    const isSuperUser = user && user.is_superuser;
+    const token = localStorage.getItem('token')
+    const [users, setUsers] = useState([]);
+    const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    // Function to fetch User List from the API
+    function userList(pageNumber) {
+        fetch("http://127.0.0.1:8000/api/userlist/",
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`,
+                },
+            }
+
+        )
+            .then((res) => res.json())
+            .then((jsonResponse) => {
+                setUsers(jsonResponse.results);
+                setTotalPages(jsonResponse.total_pages);
+            })
+            .catch((err) => {
+                console.log(err);
+                setError(err);
+            });
+    }
+
+    // useEffect(() => {
+    //     userList(currentPage);
+    // }, []);
+    function handlePageChange(pageNumber) {
+        setCurrentPage(pageNumber);
+        localStorage.setItem("currentPage", pageNumber);
+    }
+    useEffect(() => {
+        const storedPage = localStorage.getItem("currentPage");
+        setCurrentPage(storedPage ? parseInt(storedPage) : 1);
+        userList(currentPage);
+      }, [currentPage]);
+      
+
     return (
         <>
             <Navbar></Navbar>
 
             <HeaderButton></HeaderButton>
-            
+
             <div class="">
                 <div class="row">
                     <div class="left-section">
@@ -80,113 +124,100 @@ function Dashboard() {
                         </div>
                     </div>
                 </div>
-                <div class="container mt-5 table">
-                    <div class="row">
+                {isSuperUser ?
+                    (<div class="container mt-5 table">
+                        <div class="row">
 
-                        <div class="main-box clearfix">
-                            <div class="table-responsive">
-                                <table class="table user-list">
-                                    <thead>
-                                        <tr>
-                                            <th><span>User</span></th>
-                                            <th><span>Created</span></th>
-                                            <th class="text-center"><span>Status</span></th>
-                                            <th><span>Email</span></th>
-                                            <th><span>Actions</span></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
-                                                <a href="#" class="user-link">Mila Kunis</a>
-                                                <span class="user-subhead">Admin</span>
-                                            </td>
-                                            <td>
-                                                2013/08/08
-                                            </td>
-                                            <td class="text-center">
-                                                <span class="label label-default">Inactive</span>
-                                            </td>
-                                            <td>
-                                                <a href="#">mila@kunis.com</a>
-                                            </td>
-                                            <td style={{ width: '20%' }}>
-                                                <a href="#" class="table-link">
-                                                    <span class="fa-stack">
-                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                                                    </span>
+                            <div class="main-box clearfix">
+                                <div class="table-responsive">
+                                    <table class="table user-list">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center"><span>Sl No</span></th>
+                                                <th class="text-center"><span>Name</span></th>
+                                                <th class="text-center"><span>User Name</span></th>
+                                                <th class="text-center"><span>Email</span></th>
+                                                <th class="text-center"><span>Mobile number</span></th>
+                                                <th class="text-center"><span>Actions</span></th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {users
+                                                &&
+                                                users.map((user, index) => (
+                                                    <tr key={index}>
+                                                        <td>{index + 1}</td>
+                                                        <td>
+                                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
+                                                            <a href="#" class="user-link">{user.name}</a>
+                                                        </td>
+                                                        <td class="text-center">{user.username}</td>
+                                                        <td class="text-center">
+                                                            <a href="#">{user.email}</a>
+                                                        </td>
+                                                        <td>{user.mobile_number}</td>
+                                                        {
+                                                            user.is_superuser === true ? <td>Supar Admin</td> :
+                                                                <td style={{ width: '20%' }}>
+                                                                    <a href="#" class="table-link">
+                                                                        <span class="fa-stack">
+                                                                            <i class="fa fa-square fa-stack-2x"></i>
+                                                                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                    <a href="#" class="table-link">
+                                                                        <span class="fa-stack">
+                                                                            <i class="fa fa-square fa-stack-2x"></i>
+                                                                            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                    <a href="#" class="table-link danger">
+                                                                        <span class="fa-stack">
+                                                                            <i class="fa fa-square fa-stack-2x"></i>
+                                                                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </td>
+
+                                                        }
+
+
+                                                    </tr>
+                                                ))}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-container">
+                                    <ul class="pagination pull-left">
+                                        <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
+                                        {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+                                            <li key={page}>
+                                                <a
+                                                    href="#"
+                                                    onClick={() => handlePageChange(page)}
+                                                    className={currentPage === page ? "active" : ""}
+                                                >
+                                                   page {page}
                                                 </a>
-                                                <a href="#" class="table-link">
-                                                    <span class="fa-stack">
-                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                                                    </span>
-                                                </a>
-                                                <a href="#" class="table-link danger">
-                                                    <span class="fa-stack">
-                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                                    </span>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
-                                                <a href="#" class="user-link">Mila Kunis</a>
-                                                <span class="user-subhead">Admin</span>
-                                            </td>
-                                            <td>
-                                                2013/08/08
-                                            </td>
-                                            <td class="text-center">
-                                                <span class="label label-default">Inactive</span>
-                                            </td>
-                                            <td>
-                                                <a href="#">mila@kunis.com</a>
-                                            </td>
-                                            <td style={{ width: '20%' }}>
-                                                <a href="#" class="table-link">
-                                                    <span class="fa-stack">
-                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                        <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
-                                                    </span>
-                                                </a>
-                                                <a href="#" class="table-link">
-                                                    <span class="fa-stack">
-                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                                                    </span>
-                                                </a>
-                                                <a href="#" class="table-link danger">
-                                                    <span class="fa-stack">
-                                                        <i class="fa fa-square fa-stack-2x"></i>
-                                                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                                    </span>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                            </li>
+                                        ))}
+                                        {/* <li><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">4</a></li>
+                                        <li><a href="#">5</a></li> */}
+                                        <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="pagination-container">
-                                <ul class="pagination pull-left">
-                                    <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-                                </ul>
-                            </div>
+
                         </div>
-
-                    </div>
-                </div>
+                    </div>) : (<></>)
+                }
             </div>
+
 
 
 

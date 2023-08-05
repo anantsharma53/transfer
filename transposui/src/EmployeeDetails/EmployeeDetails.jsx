@@ -8,6 +8,7 @@ import Footer from '../Footer/Footer';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 function EmployeeDetails() {
+    const token = localStorage.getItem('token')
     const [user, setUser] = useState({});
     const navigate = useNavigate();
     function handleSubmit() {
@@ -17,6 +18,7 @@ function EmployeeDetails() {
             body: JSON.stringify(user),
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
             },
 
         })

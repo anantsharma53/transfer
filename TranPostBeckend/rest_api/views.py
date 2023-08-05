@@ -6,6 +6,8 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
+from django.core.paginator import Paginator
 import json
 import random
 import copy
@@ -33,20 +35,64 @@ class SignInView(APIView):
         if serializer.is_valid():
             user=serializer.validated_data
             refresh=RefreshToken.for_user(user)
+            user_data = {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'name':user.name,
+                'mobile_number':user.mobile_number,
+                'is_superuser':user.is_superuser
+                # Add other user details you want to include
+            }
             return JsonResponse({
+                'user': user_data,
                 'refresh':str(refresh),
                 'access':str(refresh.access_token)
             },
             status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.error,status.HTTP_400_BAD_REQUEST,safe=False)
+    
+class GetUserViews(APIView):
+    permission_classes=[IsAuthenticated]    
+    def get(self, request):
+        paginator = PageNumberPagination()
+        paginator.page_size = 2
+        users = User.objects.all()
+        result_page = paginator.paginate_queryset(users, request)
+        user_serialized = UserSerializer(result_page, many=True).data
+        return paginator.get_paginated_response(user_serialized)
+    
+    # as per classes
+class GetUsersViews(APIView):
+    permission_classes=[IsAuthenticated]    
+    def get(self, request):
+        page_number =request.GET.get('page',1)
+        users=User.objects.all().order_by("id")
+        paginator = Paginator(users, 5)
+        page = paginator.get_page(page_number)
+        users_on_page = page.object_list
+        user_serialized = UserSerializer(users_on_page, many=True).data
+        return JsonResponse({"data": user_serialized, 
+        "total_pages": paginator.num_pages, 
+        "total_product": users.count()})
+    
+        # users = User.objects.filter(user=request.user.id)
+        # users = User.objects.filter()
+        # user_serialized=UserSerializer(users,many=True).data
+        # return JsonResponse(user_serialized,safe=False)
+    
 class GetEmployeeView(View):
+    
     def get(self, request):
         employee_serialized = EmployeeSerializer(Employee, many=True).data
         return JsonResponse(employee_serialized, safe=False, status=200)
     
 class EmployeeEntryView(APIView):
+    permission_classes=[IsAuthenticated]
     def post(self,request):
-        serializer=EmployeeSerializer(data=request.data)
+        data=json.loads(request.body)
+        data["user"]=request.user.id
+        serializer=EmployeeSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse({'message':'entry done'}, status=status.HTTP_201_CREATED)

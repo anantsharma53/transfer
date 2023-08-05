@@ -4,7 +4,7 @@ from .views import *
 from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns =[ 
-    
+    path('userlist/', GetUserViews.as_view(), name='user-list'),
     path('employee/', GetEmployeeView.as_view(), name='employee-list'),
     path('employee/search/', GetEmployeeByPostView.as_view(), name='employee-list'),
     path('employee/search/new', csrf_exempt(GetNewOfficeWithBlock.as_view()), name='New Office with block'),

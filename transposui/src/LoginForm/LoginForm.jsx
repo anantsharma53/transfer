@@ -44,9 +44,11 @@ function Login() {
       })
       .then((data) => {
         console.log(data);
+        const { user, access } = data;
         localStorage.setItem("token", data.access); // Store the access_token in localStorage
         localStorage.setItem("tokenExpiration", data.access);
-       
+        localStorage.setItem("user_details",JSON.stringify(user));
+        
         navigate("/dashboard");
       })
       .catch((err) => {

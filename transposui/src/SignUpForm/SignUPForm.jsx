@@ -9,6 +9,7 @@ import Footer from '../Footer/Footer';
 import HeaderButton from "../HeaderButton/HeaderButton";
 
 function Register() {
+  const token = localStorage.getItem('token')
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   function handleSubmit() {
@@ -18,6 +19,8 @@ function Register() {
       body: JSON.stringify(user),      
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+
       },
 
     })
