@@ -127,21 +127,23 @@ class GetPostView(APIView):
         return JsonResponse(post_serialized, safe=False, status=200)
 
 
-class GetEmployeeByPostView(View):
+class GetEmployeeByPostView(APIView):
     def get(self, request):
         query = request.GET.get('query')
         # print(query)
-        Employee_list = []
-        for val in employee:
-            if 'Panchyat Secretary' == query:
-                Employee_list.append(val)
-        employee_serialized = EmployeeSerializer(
-            Employee_list, many=True).data
-        if (Employee_list):
-            return JsonResponse(employee_serialized, safe=False, status=200)
-        else:
-            query = ""
-            return HttpResponseBadRequest("Error", status=401)
+        Employee_list = employee.objects.filter(Post=query)
+        employee_serialized = EmployeeSerializer(Employee_list, many=True).data
+        return JsonResponse(employee_serialized, safe=False, status=200)
+        # for val in employee:
+        #     if 'Panchyat Secretary' == query:
+        #         Employee_list.append(val)
+        # employee_serialized = EmployeeSerializer(
+        #     Employee_list, many=True).data
+        # if (Employee_list):
+        #     return JsonResponse(employee_serialized, safe=False, status=200)
+        # else:
+        #     query = ""
+        #     return HttpResponseBadRequest("Error", status=401)
 
 # class GetEmployeeByPostView(View):
 #     def get(self, request):
