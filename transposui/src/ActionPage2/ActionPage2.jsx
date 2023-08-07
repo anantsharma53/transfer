@@ -167,7 +167,7 @@ function ActionPage2() {
 
                 </div>
                 <div>
-                <select id="select_box" value={post} onChange={e => setPost(e.target.value)}>
+                <select id="select_box" value={postoption.Post} onChange={e => setPost(e.target.value)}>
                                     <option value={postoption.Post}
                                     >Select Designations</option>
                                     {postoption.map((postoption) => (
