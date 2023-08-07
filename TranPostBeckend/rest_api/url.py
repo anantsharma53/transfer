@@ -13,4 +13,6 @@ urlpatterns =[
     path('employee/user/signup/',csrf_exempt(SigneUpView.as_view()),name='user-signup'),
     path('employee/user/login/',csrf_exempt(SignInView.as_view()),name='user-login'),
     path('employee/emp/',csrf_exempt(EmployeeEntryView.as_view()),name='Employee-Entry-View'),
+    path('employee/desi/',csrf_exempt(DesiganationEntryView.as_view()),name='Employee-Entry-View'),
+    path('posts/', GetPostView.as_view(), name='post-list'),
 ]

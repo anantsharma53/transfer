@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./EmployeeDetails.css";
 import { useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from 'formik';
@@ -10,6 +10,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 function EmployeeDetails() {
     const token = localStorage.getItem('token')
     const [user, setUser] = useState({});
+    const [post, setPost] = useState([]);
     const navigate = useNavigate();
     function handleSubmit() {
         console.log(user);
@@ -38,15 +39,37 @@ function EmployeeDetails() {
             });
         console.log(user);
     }
-function Reset(){
-    document.getElementById("employee-form").reset();
-    setUser(prevState => ({ ...prevState, Date_of_Birth: '' }));
+    useEffect(() => {
+        // Fetch the options from the API here
+        fetch("http://127.0.0.1:8000/api/posts/",
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
 
-}
+        }
+        )
+            .then((response) => response.json())
+            .then((data) => setPost(data))
+            .catch((error) => console.log(error));
+    }, []);
 
+
+    function Reset() {
+        document.getElementById("employee-form").reset();
+        setUser(prevState => ({ ...prevState, Date_of_Birth: '' }));
+
+    }
+    // function handleSelectChange(e) {
+    //     const selectedValue = e.target.value;
+    //     setUser((prevUser) => ({ ...prevUser, Post: selectedValue }));
+    // }
     return (
         <div>
             <Navbar></Navbar>
+
             <Formik
                 initialValues={{
                     Employee_Name: '',
@@ -54,7 +77,8 @@ function Reset(){
                     Home_Block: '',
                     Current_Posting_Block: '',
                     Current_Posting_Year: '',
-                    First_Previous_Block: ''
+                    First_Previous_Block: '',
+                    Post: ''
                 }}
                 validationSchema={Yup.object().shape({
                     Employee_Name: Yup.string().required('Name is required'),
@@ -70,6 +94,7 @@ function Reset(){
                 render={({ errors, status, touched }) => (
                     <section class=" container mt-5 ">
                         <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Employee Information</h3>
+
                         <Form id="employee-form" className="container">
                             <div className="form-group">
                                 <label htmlFor="Employee_Name">Name</label>
@@ -78,6 +103,22 @@ function Reset(){
                                 }} className={'form-control' + (errors.Employee_Name && touched.Employee_Name ? ' is-invalid' : '')} />
                                 {/* <div><ErrorMessage name="Employee_Name" component="div" className="invalid-feedback" /></div> */}
                             </div>
+                            <div className="form-group">
+                                <Field as="select" name="Post" className="form-control"
+                                onInput={(e) => {
+                                    user.Post = e.target.value; //setUser(user);
+                                }}
+                                >
+                                    <option value="">Select Designations</option>
+                                    {post.map((post) => (
+                                        <option key={post.Post} value={post.Post}>
+                                            {post.Post}
+                                        </option>
+                                    ))}
+                                </Field>
+                                <ErrorMessage name="Post" component="div" className="invalid-feedback" />
+                            </div>
+                            
                             <div className="form-group">
                                 <label htmlFor="Date_of_Birth">Date of Birth</label>
                                 <Field
@@ -88,8 +129,9 @@ function Reset(){
                                     value={user.Date_of_Birth}
                                     onInput={(e) => {
                                         user.Date_of_Birth = e.target.value;
-                                        setUser(user);}}                                    
-                                ></Field>                                
+                                        setUser(user);
+                                    }}
+                                ></Field>
                             </div>
                             {/* <div className="form-group">
                                 <label htmlFor="Date_of_Birth" >Date of Birth</label>
@@ -140,7 +182,7 @@ function Reset(){
                                             <button type="submit" className="btn btn-primary mr-2" disabled>Submit</button>
                                         )}
 
-                                <button type="reset" className="btn btn-secondary"onClick={Reset}>Reset</button>
+                                <button type="reset" className="btn btn-secondary" onClick={Reset}>Reset</button>
                             </div>
                         </Form>
                     </section>

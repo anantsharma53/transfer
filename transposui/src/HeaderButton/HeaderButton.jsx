@@ -6,7 +6,7 @@ function HeaderButton() {
     const isSuperUser = user && user.is_superuser;
     console.log(user.is_superuser)
     return (
-        <div class="container">
+        <div class="headerbutton">
             <div class="col-md-12 mt-5">
                 {/* <h2 class="heading-section">
                     <small>Pick Your Color</small>
@@ -23,8 +23,9 @@ function HeaderButton() {
                 }
                 <Link to='/emp'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary">Add Employee</button></Link>
                 <Link to='/viewemp'><button type="button" class="btn mb-2 mb-md-0 btn-quarternary">View Employee</button></Link>
-                <button type="button" class="btn mb-2 mb-md-0 btn-quarternary">Add Department</button>
+                <Link to='/desi'><button type="button" class="btn mb-2 mb-md-0 btn-quarternary">Add Staff Desiganations</button></Link>
                 <Link to='/home'><button type="button" class="btn mb-2 mb-md-0 btn-quarternary">Transfer & Posting</button></Link>
+                <button type="button" class="btn mb-2 mb-md-0 btn-quarternary">Else</button>
             </div>
         </div>
     );

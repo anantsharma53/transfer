@@ -30,6 +30,9 @@ class User(AbstractBaseUser):
     
     USERNAME_FIELD='username'
     objects=UserManager()
+class designations(models.Model):
+    Post = models.CharField(max_length=100, unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='postuser')
 
 class employee(models.Model):
     Employee_Name= models.CharField(max_length=100)
@@ -38,8 +41,11 @@ class employee(models.Model):
     Current_Posting_Block=models.CharField(max_length=50)
     Current_Posting_Year= models.CharField(max_length=50)
     First_Previous_Block=models.CharField(max_length=50)
+    Post=models.CharField(max_length=100)
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='user')
    
+
+
 class newemployee(models.Model):
     Employee_Name= models.CharField(max_length=100)
     Date_of_Birth= models.CharField(max_length=50)

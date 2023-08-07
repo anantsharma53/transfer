@@ -14,6 +14,8 @@ function ActionPage2() {
     const [newemployee, setNewemployee] = useState();
     const [error, setError] = useState();
     const [Sl, setSL] = useState();
+    const [postoption, setPostoption] = useState([]);
+    const token = localStorage.getItem('token')
     // 
     function generatePDF() {
         const doc = new jsPDF('landscape'); // Change 'portrait' to 'landscape' for landscape orientation
@@ -66,7 +68,22 @@ function ActionPage2() {
 
         doc.save('new_employee_list.pdf');
     }
+    useEffect(() => {
+        // Fetch the options from the API here
+        fetch("http://127.0.0.1:8000/api/posts/",
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
 
+        }
+        )
+            .then((response) => response.json())
+            .then((data) => setPostoption(data))
+            .catch((error) => console.log(error));
+    }, []);
     function OnHandelSubmit(props) {
         // console.log(props)
 
@@ -145,18 +162,40 @@ function ActionPage2() {
             <HeaderButton></HeaderButton>
             <div className='postSelection'>
                 <div>
-                    <label for="pet-select">Select Post:
+                    <label for="pet-select">Designations
                     </label>
+
                 </div>
                 <div>
+                <select id="select_box" value={post} onChange={e => setPost(e.target.value)}>
+                                    <option value={postoption.Post}
+                                    >Select Designations</option>
+                                    {postoption.map((postoption) => (
+                                        <option key={postoption.Post} value={postoption.Post}>
+                                            {postoption.Post}
+                                        </option>
+                                    ))}
+                                </select>
+                                </div>
+                {/* <div className="form-group">
+                                <h2>Designations</h2>
+                                <select id="select_box" value={post} onChange={e => setPost(e.target.value)}>
+                                    <option value={user.Post}
+                                    >Select Designations</option>
+                                    {post.map((post) => (
+                                        <option key={post.Post} value={post.Post}>
+                                            {post.Post}
+                                        </option>
+                                    ))}
+                                </select>
+                </div> */}
+                {/* <div>
                     <select id="select_box" value={post} onChange={e => setPost(e.target.value)}>
                         <option value="" selected="selected">--Please choose an option--</option>
                         <option value="Panchyat Secretary">Panchyat Secretary</option>
-                        {/* <option value="HC">HC</option>
-                        <option value="LDC">LDC</option>
-                        <option value="UDC">UDC</option> */}
+                       
                     </select>
-                </div>
+                </div> */}
                 <div>
                     <h4>{post}</h4>
                 </div>

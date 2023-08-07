@@ -16,7 +16,7 @@ function Dashboard() {
     const [totalPages, setTotalPages] = useState(1);
     // Function to fetch User List from the API
     function userList(pageNumber) {
-        fetch("http://127.0.0.1:8000/api/userlist/",
+        fetch(`http://127.0.0.1:8000/api/userlist/?page=${pageNumber}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,8 +27,14 @@ function Dashboard() {
         )
             .then((res) => res.json())
             .then((jsonResponse) => {
-                setUsers(jsonResponse.results);
-                setTotalPages(jsonResponse.total_pages);
+                const resultsArray = jsonResponse.results;
+                setUsers(resultsArray);
+                const numPages = jsonResponse.num_pages;
+                setTotalPages(numPages);
+                // const resultsArray = jsonResponse.results.results;
+                // setUsers(resultsArray);
+                // const numPages = jsonResponse.results.num_pages;
+                // setTotalPages(numPages);
             })
             .catch((err) => {
                 console.log(err);
@@ -36,9 +42,6 @@ function Dashboard() {
             });
     }
 
-    // useEffect(() => {
-    //     userList(currentPage);
-    // }, []);
     function handlePageChange(pageNumber) {
         setCurrentPage(pageNumber);
         localStorage.setItem("currentPage", pageNumber);
@@ -47,8 +50,8 @@ function Dashboard() {
         const storedPage = localStorage.getItem("currentPage");
         setCurrentPage(storedPage ? parseInt(storedPage) : 1);
         userList(currentPage);
-      }, [currentPage]);
-      
+    }, [currentPage]);
+   
 
     return (
         <>
@@ -126,9 +129,9 @@ function Dashboard() {
                 </div>
                 {isSuperUser ?
                     (<div class="container mt-5 table">
-                        <div class="row">
+                        <div class="row ">
 
-                            <div class="main-box clearfix">
+                            <div class="main-box clearfix ">
                                 <div class="table-responsive">
                                     <table class="table user-list">
                                         <thead>
@@ -190,25 +193,47 @@ function Dashboard() {
                                     </table>
                                 </div>
                                 <div class="pagination-container">
-                                    <ul class="pagination pull-left">
-                                        <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-                                        {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
-                                            <li key={page}>
-                                                <a
-                                                    href="#"
-                                                    onClick={() => handlePageChange(page)}
-                                                    className={currentPage === page ? "active" : ""}
+                                    <ul class="pagination ">
+                                        <li class="page-item ">
+                                            {
+                                                currentPage>1?<button
+                                                    className="page-link"
+                                                    onClick={() => handlePageChange(currentPage - 1)}
                                                 >
-                                                   page {page}
-                                                </a>
+                                                    Previous
+                                                </button>:
+                                                <button
+                                                className="page-link disabled"
+                                                
+                                            >
+                                                Previous
+                                            </button>
+                                            }
+                                        </li>
+                                        {/* <li><a href="#"><i class="fa fa-chevron-left"></i></a></li> */}
+                                        {Array.from({ length: totalPages }, (_, index) => (
+                                            <li class="page-item"
+                                                key={index + 1}
+                                                onClick={() => handlePageChange(index + 1)}
+                                                disabled={currentPage === index + 1}
+                                            >
+                                                <button class="page-link">{index + 1}</button>
                                             </li>
                                         ))}
-                                        {/* <li><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li> */}
-                                        <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+                                        <li class="page-item ">
+                                        {
+                                                currentPage<totalPages?<button
+                                                    className="page-link"
+                                                    onClick={() => handlePageChange(currentPage + 1)}
+                                                >
+                                                    Next
+                                                </button>:
+                                                <button className="page-link disabled" >                                                                
+                                                Next
+                                            </button>
+                                            }
+                                        </li>
+                                       
                                     </ul>
                                 </div>
                             </div>
@@ -216,7 +241,7 @@ function Dashboard() {
                         </div>
                     </div>) : (<></>)
                 }
-            </div>
+            </div >
 
 
 

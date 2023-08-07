@@ -10,6 +10,7 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import Homepage from './HomePage/Homepage';
 import Dashboard from './Dashboard/Dashboard';
 import EmployeeDetails from './EmployeeDetails/EmployeeDetails';
+import EmployeeDesi from './Desiganation/Desiganation';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path='/dashboard' element={<ProtectedRoute Component={Dashboard} />}/>
       <Route path='/home' element={<ProtectedRoute Component={ActionPage2} />}/>
       <Route path='/viewemp' element={<ProtectedRoute Component={ActionPage} />}/>
+      <Route path='/desi' element={<ProtectedRoute Component={EmployeeDesi} />}/>
     </Routes>
     </BrowserRouter>
    

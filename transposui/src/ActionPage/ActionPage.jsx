@@ -20,7 +20,7 @@ function ActionPage() {
     function OnHandelSubmit(props) {
         // console.log(props)
 
-        fetch("http://127.0.0.1:8000/api/employee/search/?query=" + props)
+        fetch("http://127.0.0.1:8000/api/employee/")
             .then((res) => res.json())
             .then((jsonResponse) => {
                 setEmployee(jsonResponse);

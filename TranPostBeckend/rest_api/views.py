@@ -12,7 +12,7 @@ import json
 import random
 import copy
 from .models import *
-from .data import Employee
+# from .data import Employee
 # Create your views here.
 NEWEmployee_list = []
 # post=""
@@ -51,39 +51,49 @@ class SignInView(APIView):
             },
             status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.error,status.HTTP_400_BAD_REQUEST,safe=False)
+
+# class GetUserViews(APIView):
+#     permission_classes = [IsAuthenticated]    
+#     def get(self, request):
+#         paginator = PageNumberPagination()
+#         paginator.page_size = 2
+#         users = User.objects.all()
+#         result_page = paginator.paginate_queryset(users, request)
+#         user_serialized = UserSerializer(result_page, many=True).data
+#         return paginator.get_paginated_response({
+#             'results': user_serialized,
+#             'num_pages': paginator.page.paginator.num_pages,
+#         })
     
-class GetUserViews(APIView):
-    permission_classes=[IsAuthenticated]    
-    def get(self, request):
-        paginator = PageNumberPagination()
-        paginator.page_size = 2
-        users = User.objects.all()
-        result_page = paginator.paginate_queryset(users, request)
-        user_serialized = UserSerializer(result_page, many=True).data
-        return paginator.get_paginated_response(user_serialized)
+# class GetUserViews(APIView):
+#     permission_classes=[IsAuthenticated]    
+#     def get(self, request):
+#         paginator = PageNumberPagination()
+#         paginator.page_size = 2
+#         users = User.objects.all()
+#         result_page = paginator.paginate_queryset(users, request)
+#         user_serialized = UserSerializer(result_page, many=True).data
+#         return paginator.get_paginated_response(user_serialized)
     
     # as per classes
-class GetUsersViews(APIView):
+class GetUserViews(APIView):
     permission_classes=[IsAuthenticated]    
     def get(self, request):
         page_number =request.GET.get('page',1)
         users=User.objects.all().order_by("id")
-        paginator = Paginator(users, 5)
+        paginator = Paginator(users, 2)
         page = paginator.get_page(page_number)
         users_on_page = page.object_list
         user_serialized = UserSerializer(users_on_page, many=True).data
-        return JsonResponse({"data": user_serialized, 
-        "total_pages": paginator.num_pages, 
-        "total_product": users.count()})
+        return JsonResponse({
+        'results': user_serialized, 
+        'num_pages': paginator.num_pages, 
+        "total_user": users.count()})
+
     
-        # users = User.objects.filter(user=request.user.id)
-        # users = User.objects.filter()
-        # user_serialized=UserSerializer(users,many=True).data
-        # return JsonResponse(user_serialized,safe=False)
-    
-class GetEmployeeView(View):
-    
+class GetEmployeeView(APIView):   
     def get(self, request):
+        Employee=employee.objects.all()
         employee_serialized = EmployeeSerializer(Employee, many=True).data
         return JsonResponse(employee_serialized, safe=False, status=200)
     
@@ -96,8 +106,25 @@ class EmployeeEntryView(APIView):
         if serializer.is_valid():
             serializer.save()
             return JsonResponse({'message':'entry done'}, status=status.HTTP_201_CREATED)
-        return JsonResponse(serializer.error,status.HTTP_400_BAD_REQUEST,safe=False)
+        return JsonResponse({'message':'entry not done'},status=status.HTTP_400_BAD_REQUEST,safe=False)
+    
+class DesiganationEntryView(APIView):
+    permission_classes=[IsAuthenticated]
+    def post(self,request):
+        data=json.loads(request.body)
+        data["user"]=request.user.id
+        serializer=DesiSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({'message':'entry done'}, status=status.HTTP_201_CREATED)
+        return JsonResponse({'message':'entry not done'},status=status.HTTP_400_BAD_REQUEST,safe=False)
 
+class GetPostView(APIView): 
+    permission_classes=[IsAuthenticated]  
+    def get(self, request):
+        Post=designations.objects.all()
+        post_serialized = DesiSerializer(Post, many=True).data
+        return JsonResponse(post_serialized, safe=False, status=200)
 
 
 class GetEmployeeByPostView(View):
@@ -105,7 +132,7 @@ class GetEmployeeByPostView(View):
         query = request.GET.get('query')
         # print(query)
         Employee_list = []
-        for val in Employee:
+        for val in employee:
             if 'Panchyat Secretary' == query:
                 Employee_list.append(val)
         employee_serialized = EmployeeSerializer(
@@ -115,6 +142,22 @@ class GetEmployeeByPostView(View):
         else:
             query = ""
             return HttpResponseBadRequest("Error", status=401)
+
+# class GetEmployeeByPostView(View):
+#     def get(self, request):
+#         query = request.GET.get('query')
+#         # print(query)
+#         Employee_list = []
+#         for val in Employee:
+#             if 'Panchyat Secretary' == query:
+#                 Employee_list.append(val)
+#         employee_serialized = EmployeeSerializer(
+#             Employee_list, many=True).data
+#         if (Employee_list):
+#             return JsonResponse(employee_serialized, safe=False, status=200)
+#         else:
+#             query = ""
+#             return HttpResponseBadRequest("Error", status=401)
 
 class GetNewOfficeWithBlock(View):
     def get(self, request):
