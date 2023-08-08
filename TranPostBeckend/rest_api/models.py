@@ -33,6 +33,10 @@ class User(AbstractBaseUser):
 class designations(models.Model):
     Post = models.CharField(max_length=100, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='postuser')
+    
+class officename(models.Model):
+    Office_name=models.CharField(max_length=100, unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='officeuser')
 
 class employee(models.Model):
     Employee_Name= models.CharField(max_length=100)

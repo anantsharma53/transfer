@@ -15,6 +15,11 @@ class DesiSerializer(serializers.ModelSerializer):
     class Meta:
         model=designations
         fields ='__all__'
+class OfficeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=officename
+        fields ='__all__'
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

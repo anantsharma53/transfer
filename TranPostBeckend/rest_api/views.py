@@ -118,13 +118,38 @@ class DesiganationEntryView(APIView):
             serializer.save()
             return JsonResponse({'message':'entry done'}, status=status.HTTP_201_CREATED)
         return JsonResponse({'message':'entry not done'},status=status.HTTP_400_BAD_REQUEST,safe=False)
-
+    
 class GetPostView(APIView): 
     permission_classes=[IsAuthenticated]  
     def get(self, request):
         Post=designations.objects.all()
         post_serialized = DesiSerializer(Post, many=True).data
         return JsonResponse(post_serialized, safe=False, status=200)
+        
+class OfficeEntryView(APIView):
+    permission_classes=[IsAuthenticated]
+    def post(self,request):
+        data=json.loads(request.body)
+        data["user"]=request.user.id
+        serializer=OfficeSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({'message':'entry done'}, status=status.HTTP_201_CREATED)
+        return JsonResponse({'message':'entry not done'},status=status.HTTP_401_UNAUTHORIZED,safe=False)
+    
+# class GetOfficeView(APIView): 
+#     permission_classes=[IsAuthenticated]  
+#     def get(self, request):
+#         Office=officename.objects.all()
+#         office_serialized = OfficeSerializer(Office, many=True).data
+#         return JsonResponse(office_serialized, safe=False, status=200)
+class GetOfficeView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        search_query = request.data.get('search_query', '')  # Get the search query from the POST data
+        offices = officename.objects.filter(Office_name__icontains=search_query)  # Use icontain to search
+        office_serialized = OfficeSerializer(offices, many=True).data
+        return JsonResponse(office_serialized, safe=False, status=200)
 
 
 class GetEmployeeByPostView(APIView):

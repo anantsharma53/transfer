@@ -24,6 +24,7 @@ function HeaderButton() {
                 <Link to='/emp'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary">Add Employee</button></Link>
                 <Link to='/viewemp'><button type="button" class="btn mb-2 mb-md-0 btn-quarternary">View Employee</button></Link>
                 <Link to='/desi'><button type="button" class="btn mb-2 mb-md-0 btn-quarternary">Add Staff Desiganations</button></Link>
+                <Link to='/office'><button type="button" class="btn mb-2 mb-md-0 btn-quarternary">Add Office</button></Link>
                 <Link to='/home'><button type="button" class="btn mb-2 mb-md-0 btn-quarternary">Transfer & Posting</button></Link>
                 <button type="button" class="btn mb-2 mb-md-0 btn-quarternary">Else</button>
             </div>
