@@ -14,6 +14,7 @@ import copy
 from .models import *
 # from .data import Employee
 # Create your views here.
+Employee_list=[]
 NEWEmployee_list = []
 # post=""
 class SigneUpView(APIView):
@@ -186,17 +187,34 @@ class GetEmployeeByPostView(APIView):
 #             query = ""
 #             return HttpResponseBadRequest("Error", status=401)
 
-class GetNewOfficeWithBlock(View):
+# class GetNewOfficeWithBlock(APIView):
+#     def get(self, request):
+#         query = request.GET.get('query')
+#         print(query)
+#         Employee_list = employee.objects.filter(Post=query)
+#         # del NEWEmployee_list[:]
+#         for val in Employee_list:
+#             val["Alloted_Block"] =""
+#             NEWEmployee_list.append(val)
+#         employee_serialized = NEWEmployeeSerializer(NEWEmployee_list, many=True).data 
+#         print(employee_serialized)      
+#         return JsonResponse(employee_serialized, safe=False, status=200) 
+class GetNewOfficeWithBlock(APIView):
     def get(self, request):
         query = request.GET.get('query')
         print(query)
-        del NEWEmployee_list[:]
-        for val in Employee:
-            val["Alloted_Block"] =""
-            NEWEmployee_list.append(val)
+        Employee_list = employee.objects.filter(Post=query)
+        
+        del NEWEmployee_list[:]  # Create a new list to hold modified employee data
+        
+        for val in Employee_list:
+            new_employee_data = val.__dict__.copy()  # Create a copy of the employee data
+            new_employee_data["Alloted_Block"] = ""  # Add the new field
+            NEWEmployee_list.append(new_employee_data)  # Append modified data to the new list
+        
         employee_serialized = NEWEmployeeSerializer(NEWEmployee_list, many=True).data 
         print(employee_serialized)      
-        return JsonResponse(employee_serialized, safe=False, status=200) 
+        return JsonResponse(employee_serialized, safe=False, status=200)
              
 class CleanArray(View):
      def get(self,request):
@@ -206,7 +224,7 @@ class CleanArray(View):
             # print(NEWEmployee_list)
           return JsonResponse(NEWEmployee_list,safe=False, status=200)
 
-class GetNewOffice(View):
+class GetNewOffice(APIView):
     def get(self, request):
         post = request.GET.get('query')
         print(post)
@@ -214,7 +232,7 @@ class GetNewOffice(View):
             val["Alloted_Block"] = ""
         # print(NEWEmployee_list)
         FinalEmployee_list = []
-        if post == "Panchyat Secretary":
+        if post == post:
             district_requirements = {
                 "Karmatar": 6,
                 "Narayanpur": 8,

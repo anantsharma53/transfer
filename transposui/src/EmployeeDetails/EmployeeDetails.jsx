@@ -7,9 +7,11 @@ import Navbar from "../NavBar/Navbar";
 import Footer from '../Footer/Footer';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+// import { useHistory } from "react-router-dom";
 function EmployeeDetails() {
     const token = localStorage.getItem('token')
     const navigate = useNavigate();
+    // const history = useHistory();
     const [user, setUser] = useState({});
     const [post, setPost] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -121,6 +123,27 @@ function EmployeeDetails() {
             .then((data) => setPost(data))
             .catch((error) => console.log(error));
     }, []);
+    // useEffect(() => {
+    //     // Fetch the options from the API here
+    //     fetch("http://127.0.0.1:8000/api/posts/", {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Authorization": `Bearer ${token}`,
+    //         },
+    //     })
+    //     .then(response => {
+    //         if (response.status === 401) {
+    //             // Token expired or invalid, redirect to login page
+    //             history.push("/login");
+    //         }
+    //         return response.json();
+    //     })
+    //     .then(data => setPost(data))
+    //     .catch(error => console.log(error));
+    // }, [history]);
+
+   
 
     function handleSubmit() {
         console.log(user);
