@@ -8,25 +8,27 @@ function HeaderButton() {
     return (
         <div class="headerbutton">
             <div class="col-md-12 mt-5">
-                {/* <h2 class="heading-section">
-                    <small>Pick Your Color</small>
-                </h2> */}
-                {/* <button type="button" class="btn mb-2 mb-md-0 btn-primary">Default Primary</button>
-                <button type="button" class="btn mb-2 mb-md-0 btn-secondary">Default Secondary</button>
-                <button type="button" class="btn mb-2 mb-md-0 btn-tertiary">Default Tertiary</button> */}
                 {
                     isSuperUser === true ? (
-                        <Link to='/user'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary">Add User</button></Link>
+                        <>
+                            <Link to='/user'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary">Add User</button></Link>
+                            <Link to='/desi'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary">Add Staff Desiganations</button></Link>
+                            <Link to='/office'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary">Add Office</button></Link>
+                            <Link to='/home'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary">Transfer & Posting</button></Link>
+                            <Link to='/block'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary">Add Block</button></Link>
+                        </>
                     ) : (
-                        <Link to='#'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary" disabled>Add User</button></Link>
+                        <>
+                            <Link to='#'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary" disabled>Add User</button></Link>
+                            <Link to='#'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary" disabled>Add Staff Desiganations</button></Link>
+                            <Link to='#'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary" disabled>Add Office</button></Link>
+                            <Link to='#'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary" disabled>Transfer & Posting</button></Link>
+                            <Link to='#'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary" disabled>Add Block</button></Link>
+                        </>
                     )
                 }
                 <Link to='/emp'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary">Add Employee</button></Link>
-                <Link to='/viewemp'><button type="button" class="btn mb-2 mb-md-0 btn-quarternary">View Employee</button></Link>
-                <Link to='/desi'><button type="button" class="btn mb-2 mb-md-0 btn-quarternary">Add Staff Desiganations</button></Link>
-                <Link to='/office'><button type="button" class="btn mb-2 mb-md-0 btn-quarternary">Add Office</button></Link>
-                <Link to='/home'><button type="button" class="btn mb-2 mb-md-0 btn-quarternary">Transfer & Posting</button></Link>
-                <button type="button" class="btn mb-2 mb-md-0 btn-quarternary">Else</button>
+                <Link to='/viewemp'><button type="button" className="btn mb-2 mb-md-0 btn-quarternary">View Employee</button></Link>
             </div>
         </div>
     );

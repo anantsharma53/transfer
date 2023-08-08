@@ -5,6 +5,11 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class  Meta:
         model=employee
         fields ='__all__'
+
+class BlockSerializer(serializers.ModelSerializer):
+    class  Meta:
+        model=block
+        fields ='__all__'
         
 class NEWEmployeeSerializer(serializers.ModelSerializer):
     class  Meta:

@@ -5,6 +5,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Navbar from "../NavBar/Navbar";
 import Footer from '../Footer/Footer';
+import HeaderButton from "../HeaderButton/HeaderButton";
 function EmployeeOffice() {
     const token = localStorage.getItem('token')
     const [user, setUser] = useState({});
@@ -50,6 +51,7 @@ function Reset(){
     return (
         <div>
             <Navbar></Navbar>
+            <HeaderButton/>
             <Formik
                 initialValues={{
                     Office_name:'',

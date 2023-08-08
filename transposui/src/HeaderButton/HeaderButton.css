@@ -1,7 +1,7 @@
 .btn {
     margin-right: 40px;
     margin-top: 40px ;
-    padding: 12px 80px;
+    padding: 12px 60px;
     cursor: pointer;
     border-width: 1px;
     border-radius: 0 40px 0 40px;
@@ -20,5 +20,5 @@
 }
 .headerbutton{
     display: flex;    
-    margin-left: 5px;
+    margin-left: 25px;
   }

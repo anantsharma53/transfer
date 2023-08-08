@@ -61,14 +61,16 @@ function Dashboard() {
 
             <div class="">
                 <div class="row">
-                    <div class="left-section">
+                    <div class="left-section card" style={{ width: '700px', height: '400px' }}>
+                        {/* <img src="https://cdn.s3waas.gov.in/s313f320e7b5ead1024ac95c3b208610db/uploads/2018/05/2018053088.jpg" 
+                         alt="Image"/> */}
                     </div>
                     <div class="right-section">
 
                         <div class="card">
                             <article class="card-group-item">
                                 <header class="card-header">
-                                    <h6 class="title">Brands </h6>
+                                    <h6 class="title">JAMTARA </h6>
                                 </header>
                                 <div class="filter-content">
                                     <div class="card-body">
@@ -76,19 +78,19 @@ function Dashboard() {
                                             <label class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="" />
                                                 <span class="form-check-label">
-                                                    Mersedes Benz
+                                                    XXXXX
                                                 </span>
                                             </label>
                                             <label class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="" />
                                                 <span class="form-check-label">
-                                                    Nissan Altima
+                                                    XXXXXX
                                                 </span>
                                             </label>
                                             <label class="form-check">
                                                 <input class="form-check-input" type="checkbox" value="" />
                                                 <span class="form-check-label">
-                                                    Another Brand
+                                                    XXXXX
                                                 </span>
                                             </label>
                                         </form>
@@ -106,19 +108,19 @@ function Dashboard() {
                                         <label class="form-check">
                                             <input class="form-check-input" type="radio" name="exampleRadio" value="" />
                                             <span class="form-check-label">
-                                                First hand items
+                                                XXXXX
                                             </span>
                                         </label>
                                         <label class="form-check">
                                             <input class="form-check-input" type="radio" name="exampleRadio" value="" />
                                             <span class="form-check-label">
-                                                Brand new items
+                                                XXXXXX
                                             </span>
                                         </label>
                                         <label class="form-check">
                                             <input class="form-check-input" type="radio" name="exampleRadio" value="" />
                                             <span class="form-check-label">
-                                                Some other option
+                                                XXXXXX
                                             </span>
                                         </label>
                                     </div>

@@ -7,6 +7,7 @@ import Navbar from "../NavBar/Navbar";
 import Footer from '../Footer/Footer';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import HeaderButton from "../HeaderButton/HeaderButton";
 // import { useHistory } from "react-router-dom";
 function EmployeeDetails() {
     const token = localStorage.getItem('token')
@@ -30,7 +31,7 @@ function EmployeeDetails() {
     useEffect(() => {
         if (searchQuery.trim() !== '') {
             // Replace with your API endpoint URL
-            const apiUrl = `http://127.0.0.1:8000/api/office/`;
+            const apiUrl = `http://127.0.0.1:8000/api/block/`;
 
             fetch(apiUrl, {
                 method: 'POST',
@@ -187,7 +188,7 @@ function EmployeeDetails() {
     return (
         <div>
             <Navbar></Navbar>
-
+            <HeaderButton/>
             <Formik
                 initialValues={{
                     Employee_Name: '',
@@ -211,7 +212,7 @@ function EmployeeDetails() {
                 // }}
                 render={({ errors, status, touched, values, setFieldValue }) => (
                     <section class=" container mt-5 ">
-                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Employee Information</h3>
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Add Employee Information</h3>
                         {flashMessage && (
                         <div className="flash-message container">
                           {flashMessage}
@@ -257,7 +258,7 @@ function EmployeeDetails() {
                                 ></Field>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="Home_Block">Home_Block</label>
+                                <label htmlFor="Home_Block">Home Block</label>
                                 <Field
                                     type="text"
                                     name="Home_Block"
@@ -271,7 +272,7 @@ function EmployeeDetails() {
                                         setFieldValue('Home_Block', inputValue);  // Set Formik field value
                                     }}
                                     onBlur={() => {
-                                        if (!homeBlock.some(office => office.Office_name === values.Home_Block)) {
+                                        if (!homeBlock.some(office => office.block_Name === values.Home_Block)) {
                                             setFieldValue('Home_Block', ''); 
                                             setUser(prevuser => ({ ...prevuser, Home_Block: '' }));
                                              // Reset value if not a valid suggestion
@@ -284,18 +285,18 @@ function EmployeeDetails() {
                                             key={index}
                                             value={user.Home_Block}
                                             onClick={() => {
-                                                setFieldValue('Home_Block', office.Office_name);  // Set Formik field value
-                                                setUser(prevuser => ({ ...prevuser, Home_Block: office.Office_name }));
+                                                setFieldValue('Home_Block', office.block_Name);  // Set Formik field value
+                                                setUser(prevuser => ({ ...prevuser, Home_Block: office.block_Name }));
                                                 setHomeBlock([]);  // Clear suggestions after selecting
                                             }}
                                         >
-                                            {office.Office_name}
+                                            {office.block_Name}
                                         </option>
                                     ))}
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="Current_Posting_Block">Current_Posting_Block</label>
+                                <label htmlFor="Current_Posting_Block">Current Posting Office Name with Block</label>
                                 <Field                                    
                                     type="text"
                                     name="Current_Posting_Block"
@@ -335,7 +336,7 @@ function EmployeeDetails() {
                             </div>
                             
                             <div className="form-group">
-                                <label htmlFor="Current_Posting_Year">Current_Posting_Year</label>
+                                <label htmlFor="Current_Posting_Year">Current Posting Year</label>
                                 <Field name="Current_Posting_Year"
                                     onInput={(e) => {
                                         user.Current_Posting_Year = e.target.value;
@@ -347,7 +348,7 @@ function EmployeeDetails() {
                             
                            
                             <div className="form-group">
-                                <label htmlFor="First_Previous_Block">First_Previous_Block</label>
+                                <label htmlFor="First_Previous_Block">First Previous Posting Office with Block</label>
                                 <Field
                                     type="text"
                                     name="First_Previous_Block"

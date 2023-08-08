@@ -17,4 +17,6 @@ urlpatterns =[
     path('posts/', GetPostView.as_view(), name='post-list'),
     path('employee/office/',csrf_exempt(OfficeEntryView.as_view()),name='Employee-office-Entry-View'),
     path('office/', csrf_exempt(GetOfficeView.as_view()), name='office-list'),
+    path('employee/block/',csrf_exempt(BlockEntryView.as_view()),name='Employee-office-Entry-View'),
+    path('block/', csrf_exempt(GetBlockView.as_view()), name='office-list'),
 ]

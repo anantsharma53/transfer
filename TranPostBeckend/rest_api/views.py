@@ -137,6 +137,25 @@ class OfficeEntryView(APIView):
             serializer.save()
             return JsonResponse({'message':'entry done'}, status=status.HTTP_201_CREATED)
         return JsonResponse({'message':'entry not done'},status=status.HTTP_401_UNAUTHORIZED,safe=False)
+
+class BlockEntryView(APIView):
+    permission_classes=[IsAuthenticated]
+    def post(self,request):
+        data=json.loads(request.body)
+        data["user"]=request.user.id
+        serializer=BlockSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({'message':'entry done'}, status=status.HTTP_201_CREATED)
+        return JsonResponse({'message':'entry not done'},status=status.HTTP_401_UNAUTHORIZED,safe=False)
+
+class GetBlockView(APIView): 
+    permission_classes=[IsAuthenticated]  
+    def post(self, request):
+        search_query = request.data.get('search_query', '')
+        Block=block.objects.filter(block_Name__icontains=search_query)
+        block_serialized = BlockSerializer(Block, many=True).data
+        return JsonResponse(block_serialized, safe=False, status=200)
     
 # class GetOfficeView(APIView): 
 #     permission_classes=[IsAuthenticated]  

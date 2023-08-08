@@ -12,6 +12,7 @@ import Dashboard from './Dashboard/Dashboard';
 import EmployeeDetails from './EmployeeDetails/EmployeeDetails';
 import EmployeeDesi from './Desiganation/Desiganation';
 import EmployeeOffice from './Office/Office';
+import Block from './Block/Block';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <Route path='/viewemp' element={<ProtectedRoute Component={ActionPage} />}/>
       <Route path='/desi' element={<ProtectedRoute Component={EmployeeDesi} />}/>
       <Route path='/office' element={<ProtectedRoute Component={EmployeeOffice} />}/>
+      <Route path='/block' element={<ProtectedRoute Component={Block} />}/>
     </Routes>
     </BrowserRouter>
    
