@@ -51,7 +51,7 @@ function Dashboard() {
         setCurrentPage(storedPage ? parseInt(storedPage) : 1);
         userList(currentPage);
     }, [currentPage]);
-   
+
 
     return (
         <>
@@ -60,10 +60,9 @@ function Dashboard() {
             <HeaderButton></HeaderButton>
 
             <div class="">
-                <div class="row">
+                <h3 class="container">Welcome {user.name}</h3>
+                {/* <div class="row">
                     <div class="left-section card" style={{ width: '700px', height: '400px' }}>
-                        {/* <img src="https://cdn.s3waas.gov.in/s313f320e7b5ead1024ac95c3b208610db/uploads/2018/05/2018053088.jpg" 
-                         alt="Image"/> */}
                     </div>
                     <div class="right-section">
 
@@ -128,14 +127,17 @@ function Dashboard() {
                             </article>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 {isSuperUser ?
                     (<div class="container mt-5 table">
                         <div class="row ">
 
+
                             <div class="main-box clearfix ">
                                 <div class="table-responsive">
+                                    <h3>User List</h3>
                                     <table class="table user-list">
+
                                         <thead>
                                             <tr>
                                                 <th class="text-center"><span>Sl No</span></th>
@@ -184,9 +186,7 @@ function Dashboard() {
                                                                         </span>
                                                                     </a>
                                                                 </td>
-
                                                         }
-
 
                                                     </tr>
                                                 ))}
@@ -198,18 +198,17 @@ function Dashboard() {
                                     <ul class="pagination ">
                                         <li class="page-item ">
                                             {
-                                                currentPage>1?<button
+                                                currentPage > 1 ? <button
                                                     className="page-link"
                                                     onClick={() => handlePageChange(currentPage - 1)}
                                                 >
                                                     Previous
-                                                </button>:
-                                                <button
-                                                className="page-link disabled"
-                                                
-                                            >
-                                                Previous
-                                            </button>
+                                                </button> :
+                                                    <button
+                                                        className="page-link disabled"
+                                                    >
+                                                        Previous
+                                                    </button>
                                             }
                                         </li>
                                         {/* <li><a href="#"><i class="fa fa-chevron-left"></i></a></li> */}
@@ -223,19 +222,19 @@ function Dashboard() {
                                             </li>
                                         ))}
                                         <li class="page-item ">
-                                        {
-                                                currentPage<totalPages?<button
+                                            {
+                                                currentPage < totalPages ? <button
                                                     className="page-link"
                                                     onClick={() => handlePageChange(currentPage + 1)}
                                                 >
                                                     Next
-                                                </button>:
-                                                <button className="page-link disabled" >                                                                
-                                                Next
-                                            </button>
+                                                </button> :
+                                                    <button className="page-link disabled" >
+                                                        Next
+                                                    </button>
                                             }
                                         </li>
-                                       
+
                                     </ul>
                                 </div>
                             </div>
@@ -244,9 +243,6 @@ function Dashboard() {
                     </div>) : (<></>)
                 }
             </div >
-
-
-
 
             <Footer></Footer>
         </>

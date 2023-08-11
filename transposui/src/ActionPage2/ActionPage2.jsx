@@ -13,7 +13,7 @@ function ActionPage2() {
     const [employee, setEmployee] = useState();
     const [newemployee, setNewemployee] = useState();
     const [error, setError] = useState();
-    const [Sl, setSL] = useState();
+    const [Sl, setSL] = useState(); 
     const [postoption, setPostoption] = useState([]);
     const token = localStorage.getItem('token')
     // 
@@ -68,21 +68,42 @@ function ActionPage2() {
 
         doc.save('new_employee_list.pdf');
     }
+    // useEffect(() => {
+    //     // Fetch the options from the API here
+    //     fetch("http://127.0.0.1:8000/api/posts/",
+    //     {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Authorization": `Bearer ${token}`,
+    //         },
+
+    //     }
+    //     )
+    //         .then((response) => response.json())
+    //         .then((data) => setPostoption(data))
+    //         .catch((error) => console.log(error));
+    // }, []);
     useEffect(() => {
-        // Fetch the options from the API here
-        fetch("http://127.0.0.1:8000/api/posts/",
-        {
+        fetch("http://127.0.0.1:8000/api/posts/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`,
             },
-
-        }
-        )
-            .then((response) => response.json())
-            .then((data) => setPostoption(data))
-            .catch((error) => console.log(error));
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else if (response.status !== 200) {
+                // Token expired, perform the redirect here
+                window.location.href = "/login";
+            } else {
+                throw new Error("Network response was not ok");
+            }
+        })
+        .then((data) => setPostoption(data))
+        .catch((error) => console.log(error));
     }, []);
     function OnHandelSubmit(props) {
         // console.log(props)
@@ -121,7 +142,16 @@ function ActionPage2() {
     function OnHandelRandomSubmit(props) {
         console.log()
         console.log(props)
-        fetch("http://127.0.0.1:8000/api/employee/newoffice/?query=" + props)
+        fetch("http://127.0.0.1:8000/api/employee/newoffice/?query=" + props,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+
+        }
+        )
 
             .then((res) => res.json())
             .then((jsonResponse) => {

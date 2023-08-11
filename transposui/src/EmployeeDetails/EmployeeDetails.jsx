@@ -107,42 +107,45 @@ function EmployeeDetails() {
             
         }
     }, [searchQuery2]);
-
     useEffect(() => {
-        // Fetch the options from the API here
-        fetch("http://127.0.0.1:8000/api/posts/",
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`,
-                },
-
+        fetch("http://127.0.0.1:8000/api/posts/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else if (response.status !== 200) {
+                // Token expired, perform the redirect here
+                window.location.href = "/login";
+            } else {
+                throw new Error("Network response was not ok");
             }
-        )
-            .then((response) => response.json())
-            .then((data) => setPost(data))
-            .catch((error) => console.log(error));
+        })
+        .then((data) => setPost(data))
+        .catch((error) => console.log(error));
     }, []);
+
     // useEffect(() => {
     //     // Fetch the options from the API here
-    //     fetch("http://127.0.0.1:8000/api/posts/", {
-    //         method: "GET",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "Authorization": `Bearer ${token}`,
-    //         },
-    //     })
-    //     .then(response => {
-    //         if (response.status === 401) {
-    //             // Token expired or invalid, redirect to login page
-    //             history.push("/login");
+    //     fetch("http://127.0.0.1:8000/api/posts/",
+    //         {
+    //             method: "GET",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 "Authorization": `Bearer ${token}`,
+    //             },
+
     //         }
-    //         return response.json();
-    //     })
-    //     .then(data => setPost(data))
-    //     .catch(error => console.log(error));
-    // }, [history]);
+    //     )
+    //         .then((response) => response.json())
+    //         .then((data) => setPost(data))
+    //         .catch((error) => console.log(error));
+    // }, []);
+    
 
    
 

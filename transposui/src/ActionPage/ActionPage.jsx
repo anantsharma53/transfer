@@ -13,14 +13,62 @@ function ActionPage() {
     const [employee, setEmployee] = useState();
     const [newemployee, setNewemployee] = useState();
     const [error, setError] = useState();
+
     const [Sl, setSL] = useState();
-    // 
-    
-       
+    const [postoption, setPostoption] = useState([]);
+
+    const token = localStorage.getItem('token') 
+    // useEffect(() => {
+    //     // Fetch the options from the API here
+    //     fetch("http://127.0.0.1:8000/api/posts/",
+    //     {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Authorization": `Bearer ${token}`,
+    //         },
+
+    //     }
+    //     )
+    //         .then((response) => response.json())
+    //         .then((data) => setPostoption(data))
+    //         .catch((error) => console.log(error));
+    // }, []);
+    useEffect(() => {
+        fetch("http://127.0.0.1:8000/api/posts/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else if (response.status !== 200) {
+                // Token expired, perform the redirect here
+                window.location.href = "/login";
+            } else {
+                throw new Error("Network response was not ok");
+            }
+        })
+        .then((data) => setPostoption(data))
+        .catch((error) => console.log(error));
+    }, []);
+
     function OnHandelSubmit(props) {
         // console.log(props)
 
-        fetch("http://127.0.0.1:8000/api/employee/")
+        fetch("http://127.0.0.1:8000/api/employee/search/?query=" + props,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+
+        }
+        )
             .then((res) => res.json())
             .then((jsonResponse) => {
                 setEmployee(jsonResponse);
@@ -46,14 +94,16 @@ function ActionPage() {
                     </label>
                 </div>
                 <div>
-                    <select id="select_box" value={post} onChange={e => setPost(e.target.value)}>
-                        <option value="" selected="selected">--Please choose an option--</option>
-                        <option value="Panchyat Secretary">Panchyat Secretary</option>
-                        {/* <option value="HC">HC</option>
-                        <option value="LDC">LDC</option>
-                        <option value="UDC">UDC</option> */}
-                    </select>
-                </div>
+                <select id="select_box" value={postoption.Post} onChange={e => setPost(e.target.value)}>
+                                    <option value={postoption.Post}
+                                    >Select Designations</option>
+                                    {postoption.map((postoption) => (
+                                        <option key={postoption.Post} value={postoption.Post}>
+                                            {postoption.Post}
+                                        </option>
+                                    ))}
+                                </select>
+                                </div>
                 <div>
                     <h4>{post}</h4>
                 </div>

@@ -171,14 +171,36 @@ class GetOfficeView(APIView):
         office_serialized = OfficeSerializer(offices, many=True).data
         return JsonResponse(office_serialized, safe=False, status=200)
 
-
 class GetEmployeeByPostView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         query = request.GET.get('query')
-        # print(query)
-        Employee_list = employee.objects.filter(Post=query)
+        user_id = request.user.id
+        user = User.objects.get(id=user_id)
+        if user.is_superuser:
+            Employee_list = employee.objects.filter(Post=query)
+        else:
+            Employee_list = employee.objects.filter(Post=query, user=user_id)        
         employee_serialized = EmployeeSerializer(Employee_list, many=True).data
         return JsonResponse(employee_serialized, safe=False, status=200)
+# class GetEmployeeByPostView(APIView):
+#     permission_classes = [IsAuthenticated]
+#     def get(self, request):
+#         query = request.GET.get('query')
+#         user_id=request.user.id
+#         user=User.objects.filter(request.user.id)
+#         if user["is_superuser"]==True:
+#             Employee_list = employee.objects.filter(Post=query)
+#         else:
+#             Employee_list = employee.objects.filter(Post=query,user=user_id)
+#         employee_serialized = EmployeeSerializer(Employee_list, many=True).data
+#         return JsonResponse(employee_serialized, safe=False, status=200)
+
+        
+        # print(query)
+        
+       
         # for val in employee:
         #     if 'Panchyat Secretary' == query:
         #         Employee_list.append(val)

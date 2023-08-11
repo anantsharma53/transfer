@@ -24,7 +24,7 @@ function EmpRegister() {
         console.log(res);
         if (res.status === 201) {
           alert("Successful SignUP")
-          navigate("/login");
+          // navigate("/login");
         } else if (res.status === 401) {
           console.log("Unauthorized request");
           navigate("/login");
